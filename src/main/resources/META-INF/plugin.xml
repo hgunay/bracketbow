@@ -1,7 +1,7 @@
 <idea-plugin>
     <id>com.bracketbow</id>
     <name>Bracketbow</name>
-    <vendor email="you@example.com" url="https://example.com">Bracketbow</vendor>
+    <vendor email="hakangunay@gmail.com" url="https://github.com/hgunay/bracketbow">Hakan Gunay</vendor>
 
     <description><![CDATA[
         <p>Parantezleri ( ), [ ], { } iç içe geçme seviyesine göre farklı renklerle vurgular.</p>

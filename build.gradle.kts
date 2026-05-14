@@ -35,6 +35,9 @@ intellijPlatform {
             untilBuild = "252.*"
         }
     }
+    publishing {
+        token = providers.environmentVariable("JETBRAINS_MARKETPLACE_TOKEN")
+    }
 }
 
 kotlin {
