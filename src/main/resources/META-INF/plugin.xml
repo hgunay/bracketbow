@@ -16,7 +16,14 @@
 
     <change-notes><![CDATA[
         <ul>
-            <li><b>0.1.0</b> — Initial release. Bracket colorization for Java, Kotlin, XML, HTML, JSON.</li>
+            <li><b>0.1.0</b> — Initial release.
+                <ul>
+                    <li>Bracket colorization for Java, Kotlin, XML, HTML, JSON</li>
+                    <li>7-level color hierarchy with light and dark theme defaults</li>
+                    <li>Settings UI at <b>Settings → Tools → Bracketbow</b>: enable/disable, color level count, bracket type and language toggles</li>
+                    <li>Color customization via <b>Settings → Editor → Color Scheme → Bracketbow</b></li>
+                </ul>
+            </li>
         </ul>
     ]]></change-notes>
 
