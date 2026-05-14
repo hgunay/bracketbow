@@ -1,25 +1,27 @@
 # Changelog
 
-Bu projedeki tüm önemli değişiklikler burada listelenir.
+All notable changes to this project will be documented in this file.
 
-Format [Keep a Changelog](https://keepachangelog.com/) standardına dayanır.
+Format follows [Keep a Changelog](https://keepachangelog.com/) conventions.
+
+→ [Türkçe CHANGELOG](CHANGELOG.tr.md)
 
 ## [Unreleased]
 
-### Planlanan
-- Python, JavaScript, TypeScript, Go, Rust dil desteği
-- Eşleşen parantezleri imleç üzerine gelince vurgulama
-- Indent guide renklendirme
-- Scope vurgulama
-- HTML/XML tag çifti renklendirme
-- Plugin ayarları (renk sayısı, dil seçimi)
-- Birim testler
+### Planned
+- Python, JavaScript, TypeScript, Go, Rust language support
+- Matching bracket highlight on cursor hover
+- Indent guide colorization
+- Scope highlighting
+- HTML/XML tag pair colorization
+- Unit tests
 
 ## [0.1.0] - 2026-05-14
 
-### Eklenenler
-- Java, Kotlin, XML, HTML, JSON için parantez renklendirme
-- 7 seviye renk hiyerarşisi
-- Açık (Default) ve koyu (Darcula) tema için varsayılan renkler
-- Settings → Editor → Color Scheme → Bracketbow ile özelleştirme
-- Modüler mimari: `psi/`, `colors/`, `annotator/` paketleri
+### Added
+- Bracket colorization for Java, Kotlin, XML, HTML, JSON
+- 7-level color hierarchy
+- Default colors for light (Default) and dark (Darcula) themes
+- Customization via Settings → Editor → Color Scheme → Bracketbow
+- Settings UI at Settings → Tools → Bracketbow (enable/disable, color levels, bracket types, languages)
+- Modular architecture: `psi/`, `colors/`, `annotator/`, `settings/` packages
