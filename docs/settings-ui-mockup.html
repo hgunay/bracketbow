@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="tr">
+<html lang="en">
 <head>
 <meta charset="UTF-8">
 <title>Bracketbow Settings — UI Mockup</title>
@@ -223,28 +223,28 @@
       <p class="breadcrumb">Settings → Tools → Bracketbow</p>
 
       <section>
-        <h2>Genel</h2>
+        <h2>General</h2>
         <label class="option">
           <input type="checkbox" checked />
-          <span>Bracketbow'u etkinleştir</span>
+          <span>Enable Bracketbow</span>
         </label>
         <div class="slider-row">
-          <label>Renk seviyesi sayısı</label>
+          <label>Color level count</label>
           <input type="range" min="3" max="10" value="7" step="1" oninput="document.getElementById('lv').textContent=this.value" />
           <span class="value" id="lv">7</span>
         </div>
-        <p class="hint">Bu sayıdan sonra renkler baştan başlar (modulo)</p>
+        <p class="hint">Colors cycle back from the beginning after this many levels (modulo)</p>
       </section>
 
       <section>
-        <h2>Parantez türleri</h2>
-        <label class="option"><input type="checkbox" checked /><span>Yuvarlak parantez <code>( )</code></span></label>
-        <label class="option"><input type="checkbox" checked /><span>Köşeli parantez <code>[ ]</code></span></label>
-        <label class="option"><input type="checkbox" checked /><span>Süslü parantez <code>{ }</code></span></label>
+        <h2>Bracket types</h2>
+        <label class="option"><input type="checkbox" checked /><span>Round brackets <code>( )</code></span></label>
+        <label class="option"><input type="checkbox" checked /><span>Square brackets <code>[ ]</code></span></label>
+        <label class="option"><input type="checkbox" checked /><span>Curly brackets <code>{ }</code></span></label>
       </section>
 
       <section>
-        <h2>Diller</h2>
+        <h2>Languages</h2>
         <div class="langs-grid">
           <label class="option"><input type="checkbox" checked /><span>Java</span></label>
           <label class="option"><input type="checkbox" checked /><span>Kotlin</span></label>
@@ -255,18 +255,18 @@
       </section>
 
       <section>
-        <h2>Renkler</h2>
-        <p class="hint" style="margin-left: 0; margin-bottom: 12px;">Her seviyenin rengini düzenlemek için renk şemasına git.</p>
-        <button class="primary">Renkleri düzenle</button>
+        <h2>Colors</h2>
+        <p class="hint" style="margin-left: 0; margin-bottom: 12px;">To customize each level's color, open the Color Scheme settings.</p>
+        <button class="primary">Edit colors</button>
       </section>
 
       <section class="upcoming">
-        <h2>Yakında geliyor</h2>
-        <p class="upcoming-hint">Bu özellikler henüz eklenmedi; aşağıdaki listeden hangilerini öncelik vereceğimizi seçeceğiz.</p>
-        <label class="option"><input type="checkbox" disabled /><span>Eşleşen parantez çiftini vurgula</span></label>
-        <label class="option"><input type="checkbox" disabled /><span>Indent guide'ları renklendir</span></label>
-        <label class="option"><input type="checkbox" disabled /><span>HTML/XML etiket çiftlerini renklendir</span></label>
-        <label class="option"><input type="checkbox" disabled /><span>Scope vurgulama (imleç bir parantez grubunda)</span></label>
+        <h2>Coming soon</h2>
+        <p class="upcoming-hint">These features are not yet available. Vote by checking what matters to you.</p>
+        <label class="option"><input type="checkbox" disabled /><span>Highlight matching bracket pair</span></label>
+        <label class="option"><input type="checkbox" disabled /><span>Colorize indent guides</span></label>
+        <label class="option"><input type="checkbox" disabled /><span>Colorize HTML/XML tag pairs</span></label>
+        <label class="option"><input type="checkbox" disabled /><span>Scope highlighting (cursor inside a bracket group)</span></label>
       </section>
 
       <div class="button-bar">
