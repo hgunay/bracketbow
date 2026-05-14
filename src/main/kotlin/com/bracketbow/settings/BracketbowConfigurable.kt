@@ -9,9 +9,8 @@ import com.intellij.ui.dsl.builder.*
 import javax.swing.JComponent
 
 /**
- * Settings → Tools → Bracketbow sayfasını oluşturur.
- * Kotlin UI DSL v2 ile panel inşa edilir; apply/reset/isModified
- * panel delegasyonuyla otomatik çalışır.
+ * Settings → Tools → Bracketbow page.
+ * Built with Kotlin UI DSL v2; apply/reset/isModified are handled by panel delegation.
  */
 class BracketbowConfigurable(private val project: Project) : Configurable {
 
@@ -23,36 +22,36 @@ class BracketbowConfigurable(private val project: Project) : Configurable {
         val state = BracketbowSettings.getInstance(project).state
 
         panel = panel {
-            group("Genel") {
+            group("General") {
                 row {
-                    checkBox("Bracketbow'u etkinleştir")
+                    checkBox("Enable Bracketbow")
                         .bindSelected(state::enabled)
                 }
-                row("Renk seviyesi sayısı") {
+                row("Color level count") {
                     spinner(3..10, 1)
                         .bindIntValue(state::colorLevels)
                 }
                 row {
-                    comment("Bu sayıdan sonra renkler baştan başlar (modulo)")
+                    comment("Colors cycle back from the beginning after this many levels (modulo)")
                 }
             }
 
-            group("Parantez türleri") {
+            group("Bracket types") {
                 row {
-                    checkBox("Yuvarlak parantez ( )")
+                    checkBox("Round brackets ( )")
                         .bindSelected(state::colorRoundBrackets)
                 }
                 row {
-                    checkBox("Köşeli parantez [ ]")
+                    checkBox("Square brackets [ ]")
                         .bindSelected(state::colorSquareBrackets)
                 }
                 row {
-                    checkBox("Süslü parantez { }")
+                    checkBox("Curly brackets { }")
                         .bindSelected(state::colorCurlyBrackets)
                 }
             }
 
-            group("Diller") {
+            group("Languages") {
                 row {
                     checkBox("Java").bindSelected(state::enableJava)
                     checkBox("Kotlin").bindSelected(state::enableKotlin)
@@ -66,25 +65,25 @@ class BracketbowConfigurable(private val project: Project) : Configurable {
                 }
             }
 
-            group("Renkler") {
+            group("Colors") {
                 row {
-                    comment("Her seviyenin rengini düzenlemek için renk şemasına git.")
+                    comment("To customize each level's color, open the Color Scheme settings.")
                 }
                 row {
-                    button("Renkleri düzenle") {
+                    button("Edit colors") {
                         ShowSettingsUtil.getInstance().showSettingsDialog(project, "Bracketbow")
                     }
                 }
             }
 
-            group("Yakında geliyor") {
+            group("Coming soon") {
                 row {
-                    comment("Bu özellikler henüz eklenmedi; aşağıdaki listeden hangilerini öncelik vereceğimizi seçeceğiz.")
+                    comment("These features are not yet available. Vote by checking what matters to you.")
                 }
-                row { checkBox("Eşleşen parantez çiftini vurgula").enabled(false) }
-                row { checkBox("Indent guide'ları renklendir").enabled(false) }
-                row { checkBox("HTML/XML etiket çiftlerini renklendir").enabled(false) }
-                row { checkBox("Scope vurgulama (imleç bir parantez grubunda)").enabled(false) }
+                row { checkBox("Highlight matching bracket pair").enabled(false) }
+                row { checkBox("Colorize indent guides").enabled(false) }
+                row { checkBox("Colorize HTML/XML tag pairs").enabled(false) }
+                row { checkBox("Scope highlighting (cursor inside a bracket group)").enabled(false) }
             }
         }
         return panel!!
