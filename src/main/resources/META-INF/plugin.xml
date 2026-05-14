@@ -1,0 +1,56 @@
+<idea-plugin>
+    <id>com.bracketbow</id>
+    <name>Bracketbow</name>
+    <vendor email="you@example.com" url="https://example.com">Bracketbow</vendor>
+
+    <description><![CDATA[
+        <p>Parantezleri ( ), [ ], { } iç içe geçme seviyesine göre farklı renklerle vurgular.</p>
+        <p>Rainbow Brackets pluginine ücretsiz ve açık kaynaklı bir alternatif.</p>
+        <p>Renkleri <b>Settings → Editor → Color Scheme → Bracketbow</b> altından özelleştirebilirsiniz.</p>
+    ]]></description>
+
+    <change-notes><![CDATA[
+        <ul>
+            <li><b>0.1.0</b> — İlk sürüm. Java, Kotlin, XML, HTML, JSON için parantez renklendirme.</li>
+        </ul>
+    ]]></change-notes>
+
+    <!-- Platform her IntelliJ tabanlı IDE'de mevcuttur -->
+    <depends>com.intellij.modules.platform</depends>
+
+    <!-- Java desteği opsiyonel; sadece Java modülü yüklüyse aktif olur -->
+    <depends optional="true" config-file="bracketbow-java.xml">com.intellij.java</depends>
+
+    <!-- Kotlin desteği opsiyonel -->
+    <depends optional="true" config-file="bracketbow-kotlin.xml">org.jetbrains.kotlin</depends>
+
+    <extensions defaultExtensionNs="com.intellij">
+        <!-- Ayarlar servisi (proje başına) -->
+        <projectService serviceImplementation="com.bracketbow.settings.BracketbowSettings"/>
+
+        <!-- Settings → Tools → Bracketbow sayfası -->
+        <projectConfigurable
+            parentId="tools"
+            instance="com.bracketbow.settings.BracketbowConfigurable"
+            id="com.bracketbow.settings"
+            displayName="Bracketbow"
+            nonDefaultProject="false"/>
+        <!-- Her zaman mevcut diller için annotator kayıtları -->
+        <annotator language="XML"
+                   implementationClass="com.bracketbow.annotator.BracketbowAnnotator"/>
+        <annotator language="HTML"
+                   implementationClass="com.bracketbow.annotator.BracketbowAnnotator"/>
+        <annotator language="JSON"
+                   implementationClass="com.bracketbow.annotator.BracketbowAnnotator"/>
+
+        <!-- Renk ayarları sayfası -->
+        <colorSettingsPage
+            implementation="com.bracketbow.colors.BracketbowColorSettingsPage"/>
+
+        <!-- Varsayılan renkler -->
+        <additionalTextAttributes scheme="Default"
+                                  file="colorSchemes/BracketbowDefault.xml"/>
+        <additionalTextAttributes scheme="Darcula"
+                                  file="colorSchemes/BracketbowDarcula.xml"/>
+    </extensions>
+</idea-plugin>

@@ -1,0 +1,37 @@
+<list>
+    <option name="BRACKETBOW_LEVEL_0">
+        <value>
+            <option name="FOREGROUND" value="FFD866"/>
+        </value>
+    </option>
+    <option name="BRACKETBOW_LEVEL_1">
+        <value>
+            <option name="FOREGROUND" value="78DCE8"/>
+        </value>
+    </option>
+    <option name="BRACKETBOW_LEVEL_2">
+        <value>
+            <option name="FOREGROUND" value="FF6188"/>
+        </value>
+    </option>
+    <option name="BRACKETBOW_LEVEL_3">
+        <value>
+            <option name="FOREGROUND" value="A9DC76"/>
+        </value>
+    </option>
+    <option name="BRACKETBOW_LEVEL_4">
+        <value>
+            <option name="FOREGROUND" value="AB9DF2"/>
+        </value>
+    </option>
+    <option name="BRACKETBOW_LEVEL_5">
+        <value>
+            <option name="FOREGROUND" value="FC9867"/>
+        </value>
+    </option>
+    <option name="BRACKETBOW_LEVEL_6">
+        <value>
+            <option name="FOREGROUND" value="C0E682"/>
+        </value>
+    </option>
+</list>

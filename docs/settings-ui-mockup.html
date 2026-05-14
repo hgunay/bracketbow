@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<title>Bracketbow Settings — UI Mockup</title>
+<style>
+  :root {
+    --bg: #ffffff;
+    --surface: #f7f8fa;
+    --text-primary: #1a1a1a;
+    --text-secondary: #6b6b6b;
+    --text-tertiary: #999999;
+    --border: rgba(0,0,0,0.12);
+    --accent: #3574f0;
+    --radius: 8px;
+    --font: -apple-system, BlinkMacSystemFont, "Segoe UI", "Inter", sans-serif;
+    --code-bg: rgba(0,0,0,0.05);
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #2b2d30;
+      --surface: #1e1f22;
+      --text-primary: #dfe1e5;
+      --text-secondary: #9da0a8;
+      --text-tertiary: #6f7177;
+      --border: rgba(255,255,255,0.12);
+      --code-bg: rgba(255,255,255,0.08);
+    }
+  }
+  body {
+    font-family: var(--font);
+    background: var(--surface);
+    color: var(--text-primary);
+    margin: 0;
+    padding: 2rem;
+    line-height: 1.5;
+  }
+  .ide-window {
+    max-width: 900px;
+    margin: 0 auto;
+    background: var(--bg);
+    border: 0.5px solid var(--border);
+    border-radius: var(--radius);
+    overflow: hidden;
+  }
+  .ide-titlebar {
+    background: var(--surface);
+    padding: 8px 16px;
+    font-size: 13px;
+    color: var(--text-secondary);
+    border-bottom: 0.5px solid var(--border);
+  }
+  .ide-content {
+    display: grid;
+    grid-template-columns: 240px 1fr;
+    min-height: 600px;
+  }
+  .ide-sidebar {
+    background: var(--surface);
+    border-right: 0.5px solid var(--border);
+    padding: 12px 0;
+    font-size: 14px;
+  }
+  .sidebar-item {
+    padding: 6px 16px;
+    color: var(--text-secondary);
+    cursor: default;
+  }
+  .sidebar-item.parent {
+    padding-left: 24px;
+    color: var(--text-primary);
+  }
+  .sidebar-item.child {
+    padding-left: 40px;
+  }
+  .sidebar-item.active {
+    background: rgba(53, 116, 240, 0.12);
+    color: var(--text-primary);
+  }
+  .ide-main {
+    padding: 1.5rem 2rem;
+    overflow: auto;
+  }
+  h1 {
+    font-size: 18px;
+    font-weight: 500;
+    margin: 0 0 4px;
+  }
+  .breadcrumb {
+    font-size: 13px;
+    color: var(--text-secondary);
+    margin: 0 0 2rem;
+  }
+  h2 {
+    font-size: 16px;
+    font-weight: 500;
+    margin: 0 0 1rem;
+    color: var(--text-primary);
+  }
+  section {
+    margin: 0 0 2rem;
+  }
+  section.upcoming {
+    padding-top: 1.5rem;
+    border-top: 0.5px solid var(--border);
+  }
+  label.option {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin: 0 0 10px;
+    cursor: pointer;
+  }
+  label.option input[type="checkbox"] {
+    margin: 0;
+  }
+  label.option code {
+    background: var(--code-bg);
+    padding: 1px 6px;
+    border-radius: 4px;
+    font-family: "JetBrains Mono", monospace;
+    font-size: 13px;
+  }
+  .slider-row {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin: 1rem 0 6px;
+  }
+  .slider-row label {
+    min-width: 180px;
+  }
+  .slider-row input[type="range"] {
+    flex: 1;
+    max-width: 220px;
+  }
+  .slider-row .value {
+    font-weight: 500;
+    min-width: 24px;
+  }
+  .hint {
+    font-size: 13px;
+    color: var(--text-secondary);
+    margin: 0 0 0 180px;
+  }
+  .langs-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px 24px;
+    max-width: 420px;
+  }
+  .langs-grid label {
+    margin: 0;
+  }
+  button.primary {
+    padding: 6px 14px;
+    background: var(--bg);
+    color: var(--text-primary);
+    border: 0.5px solid var(--border);
+    border-radius: var(--radius);
+    cursor: pointer;
+    font-size: 14px;
+    font-family: inherit;
+  }
+  button.primary:hover {
+    background: var(--surface);
+  }
+  .upcoming-hint {
+    font-size: 13px;
+    color: var(--text-tertiary);
+    margin: 0 0 1rem;
+  }
+  .upcoming label {
+    opacity: 0.55;
+  }
+  .button-bar {
+    margin-top: 2rem;
+    padding-top: 1rem;
+    border-top: 0.5px solid var(--border);
+    display: flex;
+    justify-content: flex-end;
+    gap: 8px;
+  }
+  .button-bar button {
+    padding: 6px 18px;
+    background: var(--bg);
+    color: var(--text-primary);
+    border: 0.5px solid var(--border);
+    border-radius: var(--radius);
+    cursor: pointer;
+    font-size: 14px;
+    font-family: inherit;
+  }
+  .button-bar button.primary-action {
+    background: var(--accent);
+    color: white;
+    border-color: var(--accent);
+  }
+</style>
+</head>
+<body>
+
+<div class="ide-window">
+  <div class="ide-titlebar">Settings</div>
+  <div class="ide-content">
+
+    <div class="ide-sidebar">
+      <div class="sidebar-item parent">Appearance &amp; Behavior</div>
+      <div class="sidebar-item parent">Editor</div>
+      <div class="sidebar-item parent">Plugins</div>
+      <div class="sidebar-item parent">Version Control</div>
+      <div class="sidebar-item parent">Build, Execution, Deployment</div>
+      <div class="sidebar-item parent">Languages &amp; Frameworks</div>
+      <div class="sidebar-item parent">Tools</div>
+      <div class="sidebar-item child active">Bracketbow</div>
+      <div class="sidebar-item child">Terminal</div>
+      <div class="sidebar-item child">Database</div>
+      <div class="sidebar-item parent">Advanced Settings</div>
+    </div>
+
+    <div class="ide-main">
+      <h1>Bracketbow</h1>
+      <p class="breadcrumb">Settings → Tools → Bracketbow</p>
+
+      <section>
+        <h2>Genel</h2>
+        <label class="option">
+          <input type="checkbox" checked />
+          <span>Bracketbow'u etkinleştir</span>
+        </label>
+        <div class="slider-row">
+          <label>Renk seviyesi sayısı</label>
+          <input type="range" min="3" max="10" value="7" step="1" oninput="document.getElementById('lv').textContent=this.value" />
+          <span class="value" id="lv">7</span>
+        </div>
+        <p class="hint">Bu sayıdan sonra renkler baştan başlar (modulo)</p>
+      </section>
+
+      <section>
+        <h2>Parantez türleri</h2>
+        <label class="option"><input type="checkbox" checked /><span>Yuvarlak parantez <code>( )</code></span></label>
+        <label class="option"><input type="checkbox" checked /><span>Köşeli parantez <code>[ ]</code></span></label>
+        <label class="option"><input type="checkbox" checked /><span>Süslü parantez <code>{ }</code></span></label>
+      </section>
+
+      <section>
+        <h2>Diller</h2>
+        <div class="langs-grid">
+          <label class="option"><input type="checkbox" checked /><span>Java</span></label>
+          <label class="option"><input type="checkbox" checked /><span>Kotlin</span></label>
+          <label class="option"><input type="checkbox" checked /><span>XML</span></label>
+          <label class="option"><input type="checkbox" checked /><span>HTML</span></label>
+          <label class="option"><input type="checkbox" checked /><span>JSON</span></label>
+        </div>
+      </section>
+
+      <section>
+        <h2>Renkler</h2>
+        <p class="hint" style="margin-left: 0; margin-bottom: 12px;">Her seviyenin rengini düzenlemek için renk şemasına git.</p>
+        <button class="primary">Renkleri düzenle</button>
+      </section>
+
+      <section class="upcoming">
+        <h2>Yakında geliyor</h2>
+        <p class="upcoming-hint">Bu özellikler henüz eklenmedi; aşağıdaki listeden hangilerini öncelik vereceğimizi seçeceğiz.</p>
+        <label class="option"><input type="checkbox" disabled /><span>Eşleşen parantez çiftini vurgula</span></label>
+        <label class="option"><input type="checkbox" disabled /><span>Indent guide'ları renklendir</span></label>
+        <label class="option"><input type="checkbox" disabled /><span>HTML/XML etiket çiftlerini renklendir</span></label>
+        <label class="option"><input type="checkbox" disabled /><span>Scope vurgulama (imleç bir parantez grubunda)</span></label>
+      </section>
+
+      <div class="button-bar">
+        <button>Reset</button>
+        <button>Apply</button>
+        <button class="primary-action">OK</button>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+</body>
+</html>
