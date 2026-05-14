@@ -52,26 +52,26 @@ data class State(
 
 ## Sections (top to bottom)
 
-### 1. Genel
+### 1. General
 
-- **Checkbox:** "Bracketbow'u etkinleştir"
+- **Checkbox:** "Enable Bracketbow"
   - Binds: `state.enabled`
   - When unchecked, annotator returns early without highlighting (master switch)
 
-- **Slider with label:** "Renk seviyesi sayısı" — range 3 to 10, default 7
+- **Slider with label:** "Color level count" — range 3 to 10, default 7
   - Binds: `state.colorLevels`
-  - Hint text below: "Bu sayıdan sonra renkler baştan başlar (modulo)"
+  - Hint text below: "Colors cycle back from the beginning after this many levels (modulo)"
   - Use `intTextField()` with `JBSlider` or just a `spinner` if DSL doesn't have native slider
 
-### 2. Parantez türleri
+### 2. Bracket types
 
 Three checkboxes (all default true):
 
-- "Yuvarlak parantez `( )`" → `state.colorRoundBrackets`
-- "Köşeli parantez `[ ]`" → `state.colorSquareBrackets`
-- "Süslü parantez `{ }`" → `state.colorCurlyBrackets`
+- "Round brackets `( )`" → `state.colorRoundBrackets`
+- "Square brackets `[ ]`" → `state.colorSquareBrackets`
+- "Curly brackets `{ }`" → `state.colorCurlyBrackets`
 
-### 3. Diller
+### 3. Languages
 
 Group with five checkboxes in a 2-column grid layout (all default true):
 
@@ -81,24 +81,24 @@ Group with five checkboxes in a 2-column grid layout (all default true):
 - "HTML" → `state.enableHtml`
 - "JSON" → `state.enableJson`
 
-### 4. Renkler
+### 4. Colors
 
-- Hint: "Her seviyenin rengini düzenlemek için renk şemasına git."
-- Button: "Renkleri düzenle"
+- Hint: "To customize each level's color, open the Color Scheme settings."
+- Button: "Edit colors"
   - On click: navigate to Color Scheme settings page
   - Use: `ShowSettingsUtil.getInstance().showSettingsDialog(project, "Bracketbow")`
   - Or: `Settings → Editor → Color Scheme → Bracketbow`
 
-### 5. Yakında geliyor
+### 5. Coming soon
 
 Disabled section with checkboxes that don't bind to state — purely informational. These represent the roadmap.
 
-- "Eşleşen parantez çiftini vurgula"
-- "Indent guide'ları renklendir"
-- "HTML/XML etiket çiftlerini renklendir"
-- "Scope vurgulama (imleç bir parantez grubunda)"
+- "Highlight matching bracket pair"
+- "Colorize indent guides"
+- "Colorize HTML/XML tag pairs"
+- "Scope highlighting (cursor inside a bracket group)"
 
-Hint above: "Bu özellikler henüz eklenmedi; aşağıdaki listeden hangilerini öncelik vereceğimizi seçeceğiz."
+Hint above: "These features are not yet available. Vote by checking what matters to you."
 
 When a feature ships, move its checkbox to the appropriate section above and remove from this list.
 
@@ -156,21 +156,21 @@ Without this, changes don't reflect until the user types or reopens the file.
 
 ## Acceptance criteria
 
-- [ ] Settings page appears at `Settings → Tools → Bracketbow`
-- [ ] All controls visible and labeled in Turkish
-- [ ] Changing the master toggle disables/enables coloring across all open files
-- [ ] Color level slider affects how many colors cycle (verifiable by setting to 3 and seeing repetition)
-- [ ] Disabling a bracket type leaves those brackets uncolored while others remain colored
-- [ ] Disabling a language leaves that language's files uncolored
-- [ ] "Renkleri düzenle" button opens the Color Scheme page
-- [ ] State persists across IDE restart
-- [ ] "Apply" applies immediately (no need to reopen files)
-- [ ] "Reset" reverts unsaved changes
+- [x] Settings page appears at `Settings → Tools → Bracketbow`
+- [x] All controls visible and labeled in English
+- [x] Changing the master toggle disables/enables coloring across all open files
+- [x] Color level spinner affects how many colors cycle (verifiable by setting to 3 and seeing repetition)
+- [x] Disabling a bracket type leaves those brackets uncolored while others remain colored
+- [x] Disabling a language leaves that language's files uncolored
+- [x] "Edit colors" button opens the Color Scheme page
+- [x] State persists across IDE restart
+- [x] "Apply" applies immediately (no need to reopen files)
+- [x] "Reset" reverts unsaved changes
 
 ## Open questions
 
 These are decisions deferred until implementation; resolve with the project owner:
 
 1. **Project-level vs application-level settings?** Current spec says project-level. If user prefers global, switch to `applicationConfigurable` and `applicationService`.
-2. **Where to put master toggle?** Currently in "Genel" section. Could also live as a status bar widget for quick toggling.
+2. **Where to put master toggle?** Currently in "General" section. Could also live as a status bar widget for quick toggling.
 3. **Should disabled languages still appear in the list?** Some users may have only IntelliJ IDEA without certain plugins (e.g., no Python plugin). The current spec lists all known languages regardless.
