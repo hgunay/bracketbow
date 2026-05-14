@@ -83,3 +83,8 @@ jobs:
           files: build/distributions/bracketbow-*.zip
           draft: false
           prerelease: false
+
+      - name: Publish to JetBrains Marketplace
+        env:
+          JETBRAINS_MARKETPLACE_TOKEN: ${{ secrets.JETBRAINS_MARKETPLACE_TOKEN }}
+        run: ./gradlew publishPlugin --no-daemon
