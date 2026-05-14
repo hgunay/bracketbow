@@ -58,4 +58,10 @@
         <additionalTextAttributes scheme="Darcula"
                                   file="colorSchemes/BracketbowDarcula.xml"/>
     </extensions>
+
+    <extensions defaultExtensionNs=org.jetbrains.kotlin>
+        <!-- K1 ve K2 Kotlin plugin modlarının ikisini de destekliyoruz.
+             Bracketbow yalnızca PSI ağacını okur; Kotlin analiz API'sine bağımlı değil. -->
+        <supportsKotlinPluginMode supportsK1=true supportsK2=true/>
+    </extensions>
 </idea-plugin>
