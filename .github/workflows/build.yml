@@ -75,6 +75,7 @@ jobs:
 
       - name: Publish to JetBrains Marketplace
         if: github.event_name == 'push' && github.ref == 'refs/heads/master'
+        continue-on-error: true  # İlk manuel yükleme yapılana kadar build'i bloklamaması için
         env:
           JETBRAINS_MARKETPLACE_TOKEN: ${{ secrets.JETBRAINS_MARKETPLACE_TOKEN }}
         run: ./gradlew publishPlugin --no-daemon -Pversion=${{ steps.tag.outputs.new_version }}
