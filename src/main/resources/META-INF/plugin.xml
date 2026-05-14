@@ -4,14 +4,19 @@
     <vendor email="hakangunay@gmail.com" url="https://github.com/hgunay/bracketbow">Hakan Gunay</vendor>
 
     <description><![CDATA[
-        <p>Parantezleri ( ), [ ], { } iç içe geçme seviyesine göre farklı renklerle vurgular.</p>
-        <p>Rainbow Brackets pluginine ücretsiz ve açık kaynaklı bir alternatif.</p>
-        <p>Renkleri <b>Settings → Editor → Color Scheme → Bracketbow</b> altından özelleştirebilirsiniz.</p>
+        <p>Colors brackets <code>( )</code>, <code>[ ]</code>, <code>{ }</code> by nesting depth —
+        a free, open-source alternative to Rainbow Brackets.</p>
+        <p>Supports Java, Kotlin, XML, HTML, and JSON out of the box.</p>
+        <ul>
+            <li>7 color levels with full customization via <b>Settings &rarr; Editor &rarr; Color Scheme &rarr; Bracketbow</b></li>
+            <li>Per-language and per-bracket-type toggles via <b>Settings &rarr; Tools &rarr; Bracketbow</b></li>
+            <li>Changes apply instantly — no need to reopen files</li>
+        </ul>
     ]]></description>
 
     <change-notes><![CDATA[
         <ul>
-            <li><b>0.1.0</b> — İlk sürüm. Java, Kotlin, XML, HTML, JSON için parantez renklendirme.</li>
+            <li><b>0.1.0</b> — Initial release. Bracket colorization for Java, Kotlin, XML, HTML, JSON.</li>
         </ul>
     ]]></change-notes>
 
