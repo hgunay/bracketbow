@@ -43,7 +43,10 @@ jobs:
           default_bump: patch
           release_branches: master
 
-      # Master: yeni versiyonla build | PR: default versiyonla build
+      - name: Fetch new tag
+        if: github.event_name == 'push' && github.ref == 'refs/heads/master'
+        run: git fetch --tags
+
       - name: Build plugin
         run: ./gradlew buildPlugin --no-daemon
 
