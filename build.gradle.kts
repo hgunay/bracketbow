@@ -5,7 +5,14 @@ plugins {
 }
 
 group = "com.bracketbow"
-version = "0.1.0"
+
+// Versiyonu en son git tag'inden oku (v0.2.1 → 0.2.1).
+// Tag yoksa veya git mevcut değilse "0.0.0-dev" kullan.
+version = providers.exec {
+    commandLine("git", "describe", "--tags", "--abbrev=0")
+}.standardOutput.asText
+    .map { it.trim().removePrefix("v") }
+    .getOrElse("0.0.0-dev")
 
 repositories {
     mavenCentral()

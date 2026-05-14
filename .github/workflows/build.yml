@@ -45,13 +45,7 @@ jobs:
 
       # Master: yeni versiyonla build | PR: default versiyonla build
       - name: Build plugin
-        run: |
-          VERSION=${{ steps.tag.outputs.new_version }}
-          if [ -n "$VERSION" ]; then
-            ./gradlew buildPlugin --no-daemon -Pversion=$VERSION
-          else
-            ./gradlew buildPlugin --no-daemon
-          fi
+        run: ./gradlew buildPlugin --no-daemon
 
       - name: Verify plugin
         continue-on-error: true  # verifier tool bug: ClosedByInterruptException on concurrent ZIP access
@@ -80,4 +74,4 @@ jobs:
         continue-on-error: true  # İlk manuel yükleme yapılana kadar build'i bloklamaması için
         env:
           JETBRAINS_MARKETPLACE_TOKEN: ${{ secrets.JETBRAINS_MARKETPLACE_TOKEN }}
-        run: ./gradlew publishPlugin --no-daemon -Pversion=${{ steps.tag.outputs.new_version }}
+        run: ./gradlew publishPlugin --no-daemon
