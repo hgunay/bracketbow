@@ -1,128 +1,102 @@
 # Bracketbow
 
-IntelliJ tabanlı IDE'ler için Rainbow Brackets pluginine ücretsiz ve açık kaynaklı bir alternatif. Parantezleri ( ), [ ], { } iç içe geçme seviyesine göre renklendirir.
+A free, open-source alternative to the Rainbow Brackets plugin for IntelliJ-based IDEs.
+Colors `( )`, `[ ]`, `{ }` brackets by nesting depth.
 
-## Gereksinimler
+→ [Türkçe README](README.tr.md)
 
-- **JDK 17+** (JDK 21 önerilir)
-- **IntelliJ IDEA** Community (ücretsiz) veya Ultimate
-- İlk Gradle çalıştırması için internet (~500 MB indirme)
+## Requirements
 
-## Hızlı Başlangıç
+- **JDK 17+** (JDK 21 recommended)
+- **IntelliJ IDEA** Community (free) or Ultimate
+- Internet connection for the first Gradle run (~500 MB download)
+
+## Quick Start
 
 ```bash
-# Projeyi IntelliJ'de aç (File → Open → bu klasör)
-# Gradle senkronizasyonunu bekle, sonra:
+# Open the project in IntelliJ (File → Open → this folder)
+# Wait for Gradle sync, then:
 
-./gradlew runIde      # Plugin'in yüklü olduğu sandbox IDE'yi başlatır
-./gradlew buildPlugin # Dağıtılabilir .zip üretir
+./gradlew runIde      # Launches a sandbox IDE with the plugin loaded
+./gradlew buildPlugin # Produces a distributable .zip
 ```
 
-Üretilen `build/distributions/bracketbow-0.1.0.zip` dosyasını gerçek IDE'de:
-`Settings → Plugins → ⚙ → Install Plugin from Disk...` ile yükleyebilirsin.
+Install the built `build/distributions/bracketbow-0.1.0.zip` in your real IDE via:
+`Settings → Plugins → ⚙ → Install Plugin from Disk...`
 
-> Windows'taysan `gradlew.bat` kullan: `gradlew.bat runIde`
+> On Windows use `gradlew.bat runIde`
 
-## Mimari
+## Settings
 
-Kod tek bir devasa sınıf yerine, sorumluluğa göre paketlere ayrılmış:
+`Settings → Tools → Bracketbow`
+
+- **Enable/disable** the plugin globally
+- **Color level count** — how many levels before colors cycle (3–10)
+- **Bracket types** — toggle round `( )`, square `[ ]`, and curly `{ }` independently
+- **Languages** — enable/disable per language (Java, Kotlin, XML, HTML, JSON)
+- **Edit colors** — opens `Settings → Editor → Color Scheme → Bracketbow`
+
+## Architecture
+
+Code is split into packages by responsibility:
 
 ```
 src/main/kotlin/com/bracketbow/
 ├── psi/
-│   ├── BracketDetector.kt    ← Bir eleman parantez mi? (saf mantık)
-│   └── DepthCalculator.kt    ← İç içe geçme derinliği ne? (saf mantık)
+│   ├── BracketDetector.kt    ← Is this element a bracket? (pure logic)
+│   └── DepthCalculator.kt    ← How deep is this bracket nested? (pure logic)
 ├── colors/
-│   ├── BracketbowColors.kt              ← Renk seviyeleri tanımı
-│   └── BracketbowColorSettingsPage.kt   ← IDE Settings sayfası
+│   ├── BracketbowColors.kt              ← Color level definitions
+│   └── BracketbowColorSettingsPage.kt   ← Color Scheme settings page
+├── settings/
+│   ├── BracketbowSettings.kt            ← PersistentStateComponent
+│   └── BracketbowConfigurable.kt        ← Settings UI (Kotlin UI DSL v2)
 └── annotator/
-    └── BracketbowAnnotator.kt           ← İnce koordinatör
+    └── BracketbowAnnotator.kt           ← Thin coordinator
 ```
 
-Bu yapının faydası: her dosya bir tek şey yapıyor. `psi/` paketindeki sınıflar IntelliJ API'sine ihtiyaç duymaktan başka bir bağımlılığı yok ve kolayca birim test edilebilir. Annotator sadece bu parçaları birleştiriyor.
+Each file does exactly one thing. Classes in `psi/` have no IntelliJ API dependency beyond `PsiElement` and are easily unit-testable. The annotator just wires the pieces together.
 
-### Veri akışı
+### Data flow
 
 ```
-IntelliJ                 BracketbowAnnotator       psi/                     colors/
-  │                              │                        │                         │
-  │── annotate(element) ────────►│                        │                         │
-  │                              │── isBracketLeaf() ────►│                         │
-  │                              │◄── true/false ─────────│                         │
-  │                              │── depthOf(element) ───►│                         │
-  │                              │◄── int ────────────────│                         │
-  │                              │── forDepth(depth) ───────────────────────────────►│
-  │                              │◄── TextAttributesKey ────────────────────────────│
-  │◄── annotation ───────────────│                        │                         │
+IntelliJ              BracketbowAnnotator     psi/                  colors/
+  │                          │                   │                      │
+  │── annotate(element) ────►│                   │                      │
+  │                          │── isBracketLeaf() ►│                      │
+  │                          │◄── true/false ─────│                      │
+  │                          │── depthOf(element) ►│                      │
+  │                          │◄── int ─────────────│                      │
+  │                          │── forDepth(depth) ───────────────────────►│
+  │                          │◄── TextAttributesKey ────────────────────│
+  │◄── annotation ───────────│                   │                      │
 ```
 
-### Derinlik nasıl hesaplanır?
+### How depth is calculated
 
-`((()))` örneği üzerinden, en içteki `(` karakteri için:
+For the innermost `(` in `((()))`:
 
-1. `BracketDetector.isBracketLeaf` → `true` (tek karakter, parantez)
+1. `BracketDetector.isBracketLeaf` → `true`
 2. `DepthCalculator.depthOf`:
-   - parent #1: en içteki paren ifadesi → `isBracketGroup` true → derinlik 0
-   - parent #2: ortadaki paren ifadesi → true → derinlik 1
-   - parent #3: en dıştaki paren ifadesi → true → derinlik 2
-   - parent #4: dosya/statement → false → dur
+   - parent #1: innermost paren expression → `isBracketGroup` true → depth 0
+   - parent #2: middle paren expression → true → depth 1
+   - parent #3: outermost paren expression → true → depth 2
+   - parent #4: file/statement → false → stop
 3. `BracketbowColors.forDepth(2)` → `BRACKETBOW_LEVEL_2`
-4. IntelliJ bu pozisyona ilgili rengi uygular
+4. IntelliJ applies the corresponding color
 
-## Dosya Yapısı
-
-```
-bracketbow/
-├── .gitignore
-├── LICENSE                          ← MIT
-├── README.md                        ← Bu dosya
-├── CHANGELOG.md                     ← Sürüm geçmişi
-├── build.gradle.kts                 ← Build konfigürasyonu
-├── settings.gradle.kts
-├── gradle.properties
-├── gradlew                          ← Linux/macOS launcher
-├── gradlew.bat                      ← Windows launcher
-├── gradle/wrapper/                  ← Gradle wrapper
-└── src/main/
-    ├── kotlin/com/bracketbow/
-    │   ├── psi/                     ← Saf PSI mantığı
-    │   ├── colors/                  ← Renk yönetimi
-    │   └── annotator/               ← IDE entegrasyonu
-    └── resources/
-        ├── META-INF/                ← Plugin manifest'leri
-        └── colorSchemes/            ← Varsayılan renkler
-```
-
-## Geliştirme
-
-### Sandbox IDE'de canlı test
+## Development
 
 ```bash
-./gradlew runIde
+./gradlew runIde       # Live test in sandbox IDE
+./gradlew buildPlugin  # Build distributable zip
+./gradlew verifyPlugin # JetBrains compatibility check
+./gradlew clean        # Fix stuck Gradle builds
 ```
 
-Yeni bir IntelliJ penceresi açılır. İçinde plugin yüklüdür. Bir `.kt` veya `.java` dosyası aç, parantezleri renkli görmelisin.
+> Requires JDK 17. If your active JDK is newer and Gradle fails, prefix with:
+> `JAVA_HOME=/path/to/jdk17 ./gradlew ...`
 
-### Plugin'i derle ve paketle
+## License
 
-```bash
-./gradlew buildPlugin
-```
-
-Çıktı: `build/distributions/bracketbow-0.1.0.zip`
-
-### Plugin'i resmi olarak doğrula
-
-```bash
-./gradlew verifyPlugin
-```
-
-JetBrains'in IDE uyumluluk kontrolünü çalıştırır.
-
-## Yapılacaklar
-
-[CHANGELOG.md](CHANGELOG.md) dosyasındaki "Planlanan" bölümüne bak.
-
-## Lisans
-
-MIT — [LICENSE](LICENSE) dosyasına bak.
+MIT — see [LICENSE](LICENSE).
