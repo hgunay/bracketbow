@@ -39,7 +39,7 @@ intellijPlatform {
     pluginConfiguration {
         ideaVersion {
             sinceBuild = "242"
-            untilBuild = "252.*"
+            untilBuild = provider { null }
         }
     }
     publishing {
