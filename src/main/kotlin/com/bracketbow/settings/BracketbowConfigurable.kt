@@ -1,10 +1,12 @@
 package com.bracketbow.settings
 
 import com.intellij.codeInsight.daemon.DaemonCodeAnalyzer
+import com.intellij.openapi.fileEditor.FileEditorManager
 import com.intellij.openapi.options.Configurable
 import com.intellij.openapi.options.ShowSettingsUtil
 import com.intellij.openapi.project.Project
 import com.intellij.openapi.ui.DialogPanel
+import com.intellij.psi.PsiManager
 import com.intellij.ui.dsl.builder.*
 import javax.swing.JComponent
 
@@ -93,7 +95,11 @@ class BracketbowConfigurable(private val project: Project) : Configurable {
 
     override fun apply() {
         panel?.apply()
-        DaemonCodeAnalyzer.getInstance(project).restart()
+        val analyzer = DaemonCodeAnalyzer.getInstance(project)
+        val psiManager = PsiManager.getInstance(project)
+        FileEditorManager.getInstance(project).openFiles.forEach { virtualFile ->
+            psiManager.findFile(virtualFile)?.let { analyzer.restart(it) }
+        }
     }
 
     override fun reset() {

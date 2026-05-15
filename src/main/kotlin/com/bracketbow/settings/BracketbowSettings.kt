@@ -36,6 +36,8 @@ class BracketbowSettings(private val project: Project) : PersistentStateComponen
     }
 
     companion object {
-        fun getInstance(project: Project): BracketbowSettings = project.service()
+        fun getInstance(project: Project): BracketbowSettings =
+            project.getService(BracketbowSettings::class.java)
+                ?: error("BracketbowSettings service not registered")
     }
 }
